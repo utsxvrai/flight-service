@@ -1,5 +1,6 @@
 const { Logger } = require('../config');
-
+const {StatusCodes} = require('http-status-codes');
+const { AppError } = require('../utils');
 class crudRepository {
     constructor(model){
         this.model = model;
@@ -16,7 +17,6 @@ class crudRepository {
         }
     }
     async destroy(data){
-        try{
             const response = await this.model.destroy({
                 where: {
                     id:data
@@ -24,47 +24,29 @@ class crudRepository {
             });
             return response;
         }
-        catch(err){
-            Logger.error("Something went wrong in get method of crudRepository");
-            throw err;
-        }
-    }
 
     async get(data){
-        try{
             const response = await this.model.findByPk(data);
+            if(!response){
+                throw new AppError('Not able to found the resource', StatusCodes.NOT_FOUND);
+            
+            }
             return response;
-        }
-        catch(err){
-            Logger.error("Something went wrong in get method of crudRepository");
-            throw err;
-        }
     }
 
     async getAll(data){
-        try{
             const response = await this.model.findAll(data);
             return response;
-        }
-        catch(err){
-            Logger.error("Something went wrong in create method of crudRepository");
-            throw err;
-        }
     }
 
     async update(id,data){
-        try{
+        
             const response = await this.model.update(data, { //data is an object
                 where: {
                     id:id
                 }
             });
             return response;
-        }
-        catch(err){
-            Logger.error("Something went wrong in update method of crudRepository");
-            throw err;
-        }
     }
 }
 

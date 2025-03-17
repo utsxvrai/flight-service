@@ -27,11 +27,52 @@ async function  createAirplane(req, res){
     catch(error){
         ErrorResponse.message = 'Something went wrong';
         return res
-        .status(error.statusCodes)
+        .status(error.statusCode)
         .json(ErrorResponse);
     } 
 }
+/*
+GET : /airplane
+req.body = {}
+*/
+async function getAirplane(req, res){
+    try {
+        const airplane = await AirplaneService.getAirplane();
+        SuccessResponse.data = airplane;
+        return res
+        .status(StatusCodes.OK)
+        .json(SuccessResponse);
+    }
+    catch(error){
+        ErrorResponse.message = 'Something went wrong';
+        return res
+        .status(error.statusCode)
+        .json(ErrorResponse);
+    }
+}
+/**
+ * 
+ *POST : /airplane/:id
+ *req.body = {}
+ */
+async function getAirplaneById(req, res){
+    try {
+        const airplane = await AirplaneService.getAirplaneById(req.params.id);
+        SuccessResponse.data = airplane;
+        return res
+        .status(StatusCodes.OK)
+        .json(SuccessResponse);
+    }
+    catch(error){
+        ErrorResponse.error = error;
+        return res
+        .status(error.statusCode)
+        .json(ErrorResponse);
+    }
+}
 
 module.exports = {
-    createAirplane
+    createAirplane,
+    getAirplane,
+    getAirplaneById
 }
