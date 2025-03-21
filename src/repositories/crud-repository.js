@@ -7,14 +7,11 @@ class crudRepository {
     }
 
     async create(data){
-        try{
+        
             const response = await this.model.create(data);
+            // console.log(response);
             return response;
-        }
-        catch(err){
-            Logger.error("Something went wrong in create method of crudRepository");
-            throw err;
-        }
+        
     }
     async destroy(data){
             const response = await this.model.destroy({
@@ -22,6 +19,7 @@ class crudRepository {
                     id:data
                 }
             });
+            // console.log(response);
             if(response == 0){
                 throw new AppError('Not able to found the resource', StatusCodes.NOT_FOUND);
             }

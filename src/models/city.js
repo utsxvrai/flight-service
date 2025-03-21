@@ -14,14 +14,23 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   City.init({
-    name: { //validation
-      type : DataTypes.STRING,
+    name: { // validation
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     sequelize,
     modelName: 'City',
+    tableName: 'city'
   });
   return City;
 };

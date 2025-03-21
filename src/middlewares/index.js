@@ -1,4 +1,5 @@
 module.exports = {
     AirplaneMiddlewares : require('./airplane-middlewares'),
-    AuthMiddlewares : require('./auth-middlewares')
+    AuthMiddlewares : require('./auth-middlewares'),
+    CityMiddlewares : require('./city-middlewares'),
 }
