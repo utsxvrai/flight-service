@@ -9,26 +9,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      flight_id: {
+      flightNumber: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      airplaneId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
         references: {
           model: 'Airplanes',
           key: 'id'
         },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
       },
-      flight_number: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      airline: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      departure_airport_id: {
+      departureAirportId: {
         type: Sequelize.STRING,
         allowNull: false,
         references: {
@@ -36,9 +30,8 @@ module.exports = {
           key: 'code'
         },
         onDelete: 'CASCADE',
-        onUpdate : 'CASCADE'
       },
-      arrival_airport_id: {
+      arrivalAirportId: {
         type: Sequelize.STRING,
         allowNull: false,
         references: {
@@ -46,42 +39,29 @@ module.exports = {
           key: 'code'
         },
         onDelete: 'CASCADE',
-        onUpdate : 'CASCADE'
       },
-      departure_time: {
+      arrivalTime: {
         type: Sequelize.DATE,
         allowNull: false
       },
-      arrival_time: {
+      departureTime: {
         type: Sequelize.DATE,
         allowNull: false
-      },
-      duration: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      total_seats: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      available_seats: {
-        type: Sequelize.INTEGER,
-        allowNull : false
       },
       price: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.INTEGER,
         allowNull: false
       },
-      status: {
-        type: Sequelize.ENUM,
-        values: ['Scheduled', 'Delayed', 'Cancelled', 'Departed', 'Arrived'],
-        defaultValue: 'Scheduled',
-        allowNull : false
+      boardingGate: {
+        type: Sequelize.STRING
+      },
+      totalSeats: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,

@@ -6,6 +6,7 @@ module.exports = {
     UserController : require('./user-controller'),
     CityController : require('./city-controller'),
     AirportController : require('./airport-controller'),
+    FlightController : require('./flight-controller'),
 
 }
 
