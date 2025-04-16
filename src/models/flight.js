@@ -17,11 +17,11 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.belongsTo(models.Airport, {
         foreignKey: 'departureAirportId',
-        as: 'departureAirport',
+        as: 'departureAirport'
       });
       this.belongsTo(models.Airport, {
         foreignKey: 'arrivalAirportId',
-        as: 'arrivalAirport',
+        as: 'arrivalAirport'
       });
     }
   }
