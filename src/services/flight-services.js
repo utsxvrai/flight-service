@@ -31,9 +31,6 @@ async function getAllFlights(query) {
         [departureAirportId, arrivalAirportId] = query.trips.split("-");
         customFilter.departureAirportId = departureAirportId;
         customFilter.arrivalAirportId = arrivalAirportId;
-        console.log('Query trips:', query.trips);
-        console.log('Departure Airport:', departureAirportId);
-        console.log('Arrival Airport:', arrivalAirportId);
     }
     if(query.price){
         [minPrice, maxPrice] = query.price.split("-");
@@ -64,13 +61,9 @@ async function getAllFlights(query) {
     
 
     try{
-        console.log('Final customFilter:', customFilter);
-        console.log('Final sortFilter:', sortFilter);
         const flights = await flightRepository.getAllFlights(customFilter, sortFilter);
-        console.log('Flights found:', flights);
         return flights;
     } catch(error) {
-        console.log('Error in getAllFlights:', error);
         throw new AppError('Cannot fetch data of all flights', StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }

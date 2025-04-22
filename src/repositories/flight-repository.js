@@ -1,5 +1,5 @@
 const CrudRepository = require('./crud-repository');
-const { Flight, Airplane, Airport  } = require('../models');
+const { Flight, Airplane, City, Airport } = require('../models');
 const {Sequelize, Op} = require('sequelize');
 
 
@@ -26,6 +26,13 @@ class FlightRepository extends CrudRepository {
                 as: 'departureAirport',
                 on:{
                     col1 : Sequelize.where(Sequelize.col('Flight.departureAirportId'), '=', Sequelize.col('departureAirport.code'))
+                },
+                // now i wanna include the city name in the departureAirport
+                include: {
+                    model: City,
+                    required: true,
+                    as: 'city',
+                    attributes: ['name']
                 }
             },
             {
@@ -43,7 +50,7 @@ class FlightRepository extends CrudRepository {
             nest: true,
             logging: console.log
         });
-        console.log('Found flights:', flights.length);
+        // console.log('Found flights:', flights.length);
         return flights; 
     }
 
