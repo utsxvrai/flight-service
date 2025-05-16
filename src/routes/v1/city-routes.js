@@ -19,6 +19,8 @@ router.patch('/:id',
         CityController.updateCity);
 
 
+router.get('/',
+        CityController.getAllCities);
 
 
 module.exports = router;

@@ -10,48 +10,41 @@ class FlightRepository extends CrudRepository {
     }
 
     async getAllFlights(filter,sort) {
-        console.log('Filter:', filter);
-        console.log('Sort:', sort);
-        const flights = await Flight.findAll({
-            where: filter,
-            order: sort,
-            include: [{
-                model: Airplane,
-                required: true,
-                as: 'airplaneDetail'
-            },
-            {
-                model: Airport,
-                required: true,
-                as: 'departureAirport',
-                on:{
-                    col1 : Sequelize.where(Sequelize.col('Flight.departureAirportId'), '=', Sequelize.col('departureAirport.code'))
-                },
-                // now i wanna include the city name in the departureAirport
-                include: {
-                    model: City,
+        try {
+            const flights = await Flight.findAll({
+                where: filter,
+                order: sort,
+                include: [{
+                    model: Airplane,
                     required: true,
-                    as: 'city',
-                    attributes: ['name']
-                }
-            },
-            {
-                model: Airport,
-                required: true,
-                as: 'arrivalAirport',
-                on:{
-                    col1 : Sequelize.where(Sequelize.col('Flight.arrivalAirportId'), '=', Sequelize.col('arrivalAirport.code'))
-                }
-            }],
-            attributes: {
-                exclude: ['createdAt', 'updatedAt']
-            },
-            raw: true,
-            nest: true,
-            logging: console.log
-        });
-        // console.log('Found flights:', flights.length);
-        return flights; 
+                    as: 'airplaneDetail'
+                },
+                {
+                    model: Airport,
+                    required: true,
+                    as: 'departureAirport',
+                    include: [{
+                        model: City,
+                        required: true,
+                        as: 'city'
+                    }]
+                },
+                {
+                    model: Airport,
+                    required: true,
+                    as: 'arrivalAirport',
+                    include: [{
+                        model: City,
+                        required: true,
+                        as: 'city'
+                    }]
+                }]
+            });
+            return flights;
+        } catch (error) {
+            console.error('Error in flight repository:', error);
+            throw error;
+        }
     }
 
     

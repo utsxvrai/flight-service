@@ -8,7 +8,7 @@ router.post('/',
     FlightMiddlewares.validateCreateRequest,
     FlightController.createFlight
 );
-
+    
 router.get('/',
     FlightController.getAllFlights
 );
