@@ -63,14 +63,32 @@ function validateCreateRequest(req, res, next) {
     next();
 }
 
+
 function validateUpdateSeatsRequest(req, res, next) {
     if(!req.body.seats) {
-        ErrorResponse.message = 'Something went wrong while creating flight';
+        ErrorResponse.message = 'Something went wrong while updating seats';
         ErrorResponse.error = new AppError(['seats not found in the incoming request in the correct form'], StatusCodes.BAD_REQUEST);
         return res
                 .status(StatusCodes.BAD_REQUEST)
                 .json(ErrorResponse);
     }
+
+    if(typeof req.body.seats !== 'number' || req.body.seats <= 0) {
+        ErrorResponse.message = 'Something went wrong while updating seats';
+        ErrorResponse.error = new AppError(['seats must be a positive number'], StatusCodes.BAD_REQUEST);
+        return res
+                .status(StatusCodes.BAD_REQUEST)
+                .json(ErrorResponse);
+    }
+
+    if(req.body.dec !== undefined && typeof req.body.dec !== 'boolean') {
+        ErrorResponse.message = 'Something went wrong while updating seats';
+        ErrorResponse.error = new AppError(['dec must be a boolean value'], StatusCodes.BAD_REQUEST);
+        return res
+                .status(StatusCodes.BAD_REQUEST)
+                .json(ErrorResponse);
+    }
+
     next();
 }
 

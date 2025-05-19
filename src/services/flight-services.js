@@ -80,9 +80,35 @@ async function getFlight(flightId) {
     }
 }
 
+async function updateSeats(data) {
+    try {
+        // Validate input data
+        if (!data.flightId) {
+            throw new AppError('Flight ID is required', StatusCodes.BAD_REQUEST);
+        }
+
+        if (!data.seats || typeof data.seats !== 'number' || data.seats <= 0) {
+            throw new AppError('Valid number of seats is required', StatusCodes.BAD_REQUEST);
+        }
+
+        // Set default value for dec if not provided
+        if (data.dec === undefined) {
+            data.dec = true;
+        }
+
+        const response = await flightRepository.updateSeats(data);
+        return response;
+    } catch(error) {
+        if (error.statusCode) {
+            throw error;
+        }
+        throw new AppError('Cannot update seats', StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
 
 module.exports = {
     createFlight,
     getAllFlights,
-    getFlight
+    getFlight,
+    updateSeats
 }
